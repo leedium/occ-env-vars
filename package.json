@@ -1,0 +1,23 @@
+{
+  "name": "occ-env-vars",
+  "version": "1.0.0",
+  "description": "Tool to add/update environment variables across Oracle Commerce Cloud instances",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leedium/occ-env-vars.git"
+  },
+  "author": "LEEDIUM",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leedium/occ-env-vars/issues"
+  },
+  "homepage": "https://github.com/leedium/occ-env-vars#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "commander": "^2.19.0"
+  }
+}
