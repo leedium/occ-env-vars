@@ -17,12 +17,42 @@
 
 
 const program = require("commander");
+const fs = require("fs-extra");
 
 const packageJSON = require('../package');
 const occTokenGenerator = require("./occ-token-generator");
 
-exports.main = (argv) => {
+let testToken;
+let stageToken;
+let prodToken;
 
+
+/**
+ * Tasks to update variables in the Test Environment
+ * @returns {Promise<any>}
+ */
+const upadateTest =  () => new Promise(async (resolve, reject) => {
+    testToken = await occTokenGenerator.generateToken(program.testserver, program.testkey);
+});
+
+/**
+ * Tasks to update variables in the Staging Environment
+ * @returns {Promise<any>}
+ */
+const upadateStage = () =>  new Promise(async(resolve, reject) => {
+    stageToken = await occTokenGenerator.generateToken(program.stageserver, program.stagekey);
+});
+
+/**
+ * Tasks to update variables in the Production Environment
+ * @returns {Promise<any>}
+ */
+const upadateProd = () =>  new Promise(async(resolve, reject) => {
+    prodToken = await occTokenGenerator.generateToken(program.prodserver, program.prodkey);
+});
+
+
+exports.main = async (argv) => {
     program
         .version(packageJSON.version)
         .description(`Tool to help you add and update extension environment variables across instances`)
@@ -35,10 +65,14 @@ exports.main = (argv) => {
         // .option("-f, --prodkey <stagingkey>", "Production api key")
         .option("-g, --config <config>", "Path to config file")
         .parse(argv);
-
-    console.log(program)
-
+    console.log(stageToken);
+    
+    if(typeof program.testserver !== "undefined" && program.testkey !== "undefined"){
+        
+    }
 };
+
+
 
 
 

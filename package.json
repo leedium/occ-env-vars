@@ -18,6 +18,7 @@
   "homepage": "https://github.com/leedium/occ-env-vars#readme",
   "dependencies": {
     "axios": "^0.18.0",
-    "commander": "^2.19.0"
+    "commander": "^2.19.0",
+    "fs-extra": "^7.0.1"
   }
 }
