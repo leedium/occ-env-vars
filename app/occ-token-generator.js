@@ -30,19 +30,44 @@ let inited = false;
  * @param refresh
  * @returns {*}
  */
-const loginToOCC = (adminServer, token) => {
-  return axios({
-    method: "POST",
-    url: `${adminServer}/ccadmin/v1/login`,
-    responseType: "json",
-    params: {
-      "grant_type": "client_credentials"
-    },
-    headers: {
-      "Authorization": `Bearer ${token}`,
-      "content-type": "application/x-www-form-urlencoded"
-    }
-  });
+const loginToOCCWithAppKey = (adminServer, token) => {
+
+    return axios({
+        method: "POST",
+        url: `${adminServer}/ccadmin/v1/login`,
+        responseType: "json",
+        params: {
+            "grant_type": "client_credentials"
+        },
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "content-type": "application/x-www-form-urlencoded"
+        }
+    });
+};
+
+/**
+ * Authenticatws with a username and password
+ * @param adminServer
+ * @param password
+ * @param username
+ * @returns {*}
+ */
+const loginToOCCAsUser = (adminServer, {password, username}) => {
+    return axios({
+        method: "POST",
+        url: `${adminServer}/ccadmin/v1/login`,
+        responseType: "json",
+        params: {
+            "grant_type": "password",
+            "password": password,
+            "username": username
+
+        },
+        headers: {
+            "content-type": "application/x-www-form-urlencoded"
+        }
+    });
 };
 
 /**
@@ -51,20 +76,28 @@ const loginToOCC = (adminServer, token) => {
  * @param token
  * @param refresh
  */
-const generateToken = async (server, token) => {
-  return new Promise((resolve, reject) => {
-    server.indexOf(HTTPS_PREFIX) !== 0 ? `${HTTPS_PREFIX}${server}` : server;
-    const req = function ({ data }){
-      //  store the token(s) in a hash
-      tokens[server] = data.access_token;
-      resolve(data.access_token);
-    };
-    loginToOCC(server, token, inited)
-      .then((res) => {
-        req(res);
-      })
-      .catch(reject);
-  });
+const generateToken = async (server, authObj, userLogin = false) => {
+    return new Promise((resolve, reject) => {
+        server.indexOf(HTTPS_PREFIX) !== 0 ? `${HTTPS_PREFIX}${server}` : server;
+        const req = function ({data}) {
+            //  store the token(s) in a hash
+            tokens[server] = data.access_token;
+            resolve(data.access_token);
+        };
+        if(userLogin){
+            loginToOCCAsUser(server, authObj)
+                .then((res) => {
+                    req(res);
+                })
+                .catch(reject);
+        }else{
+            loginToOCCWithAppKey(server, authObj)
+                .then((res) => {
+                    req(res);
+                })
+                .catch(reject);
+        }
+    });
 };
 
 /**
@@ -73,6 +106,7 @@ const generateToken = async (server, token) => {
  */
 const getCurrentToken = (server) => tokens[server];
 module.exports = {
-  generateToken
+    generateToken,
+    getCurrentToken
 };
 
