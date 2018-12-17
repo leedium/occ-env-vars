@@ -84,9 +84,9 @@ In order to bypass this, provide the application the uid/pwd combinations for th
 
 ### Realated
 
-OCC  Migration Tool (diffs) - [occ-instance-migrator](https://github.com/leedium/occ-instance-migrator "OCC instance migrator")
-OCC SSE Starter - [occ-sse-starter](https://github.com/leedium/occ-sse-starter "Serverside extension starter for Oracle Commerce Cloud")
-Standalone React components in your current UI - [occ-react-component](https://github.com/leedium/occ-react-component "OCC react component")
+OCC  Migration Tool (diffs) - [occ-instance-migrator](https://github.com/leedium/occ-instance-migrator "OCC instance migrator")  
+OCC SSE Starter - [occ-sse-starter](https://github.com/leedium/occ-sse-starter "Serverside extension starter for Oracle Commerce Cloud")  
+Standalone React components in your current UI - [occ-react-component](https://github.com/leedium/occ-react-component "OCC react component")  
 
 
 
