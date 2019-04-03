@@ -40,7 +40,7 @@ exports.main = async (argv) => {
         .option("-f, --stagepassword <stagepassword>", "Staging Password")
         .option("-g, --prodserver <prodserver>", "Production server instance")
         .option("-i, --prodpassword <prodpassword>", "Production  Password")
-        .option("-j, --prousername<produsername>", "Production Username")
+        .option("-j, --produsername <produsername>", "Production Username")
         .option("-k, --configpath <configpath>", "Path to config file")
         .parse(argv);
 
@@ -55,7 +55,7 @@ exports.main = async (argv) => {
         const {test, stage, prod} = fs.readJsonSync(upath.resolve(program.configpath));
 
         // Test
-        if (typeof program.testserver !== "undefined" && program.testusername !== "undefined"&& program.testpassword !== "undefined" ) {
+        if (typeof program.testserver !== "undefined" && program.testusername !== "undefined" &&  typeof program.testpassword !== "undefined" ) {
             taskArray.push(updateVariablesTask(program.testserver,{
                 username: program.testusername,
                 password: program.testpassword
@@ -64,7 +64,7 @@ exports.main = async (argv) => {
         }
 
         // Stage
-        if (typeof program.stageserver !== "undefined" && program.stageusername !== "undefined"&& program.stagepassword !== "undefined" ) {
+        if (typeof program.stageserver !== "undefined" && program.stageusername !== "undefined" &&  typeof program.stagepassword !== "undefined" ) {
             taskArray.push(updateVariablesTask(program.stageserver,{
                 username: program.stageusername,
                 password: program.stagepassword
@@ -73,7 +73,7 @@ exports.main = async (argv) => {
         }
 
         // Prod
-        if (typeof program.prodserver !== "undefined" && program.produsername !== "undefined"&& program.prodpassword !== "undefined" ) {
+        if (typeof program.prodserver !== "undefined" && typeof program.produsername !== "undefined" && typeof program.prodpassword !== "undefined" ) {
             taskArray.push(updateVariablesTask(program.prodserver,{
                 username: program.produsername,
                 password: program.prodpassword
